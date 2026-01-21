@@ -1,104 +1,190 @@
-<!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UNEBDO Core — Software</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:980px;margin:40px auto;padding:0 16px;line-height:1.5}
-    header{border-bottom:1px solid #ddd;padding-bottom:16px;margin-bottom:22px}
-    nav a{margin-right:12px}
-    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:14px 0}
-    .pill{display:inline-block;border:1px solid #999;border-radius:999px;padding:2px 10px;font-size:12px;margin-left:8px}
-    code{background:#f5f5f5;padding:2px 6px;border-radius:6px}
-    pre{background:#f5f5f5;padding:12px;border-radius:10px;overflow:auto}
-    .muted{color:#666}
-    ul{padding-left:18px}
-  </style>
-</head>
-<body>
-  <header>
-    <h1>UNEBDO Core <span class="pill">MVP</span></h1>
-    <p class="muted">
-      Motore software per la generazione e verifica di <b>prove opponibili</b>:
-      manifest JSON canonicalizzato, hash-chain e firma digitale.
-    </p>
-    <nav>
-      <a href="./">← Software</a>
-      <a href="../">Home</a>
-      <a href="../#ipr">IPR</a>
-      <a href="../#verify">Verify</a>
-    </nav>
-  </header>
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Any, Dict, List
+from datetime import datetime, timezone
+import re
+import hashlib
 
-  <section class="card">
-    <h2>Cos’è</h2>
-    <p>
-      <b>UNEBDO Core</b> è il modulo esecutivo minimo dell’ecosistema UNEBDO.
-      Trasforma un evento strutturato in un <b>pacchetto di prova verificabile</b>,
-      ripetibile e auditabile.
-    </p>
-  </section>
+from .canonical import canonical_bytes
+from .crypto import import_public_key_hex, verify
 
-  <section class="card">
-    <h2>Cosa fa</h2>
-    <ul>
-      <li>Costruisce un <b>manifest JSON canonicalizzato</b></li>
-      <li>Calcola <b>hash SHA-512</b> con chaining (<code>prev_hash</code>)</li>
-      <li>Applica <b>firma digitale Ed25519</b></li>
-      <li>Esporta un <b>proof bundle</b> verificabile offline</li>
-    </ul>
-  </section>
+HEX128 = re.compile(r"^[0-9a-f]{128}$")
 
-  <section class="card">
-    <h2>Pipeline (MVP)</h2>
-    <ol>
-      <li>Input evento (<code>event.json</code>)</li>
-      <li>Canonicalizzazione deterministica JSON</li>
-      <li>Calcolo hash SHA-512</li>
-      <li>Firma digitale</li>
-      <li>Esportazione pacchetto <code>proof/</code></li>
-    </ol>
-  </section>
+@dataclass
+class OpcDecision:
+    decision: str  # "ALLOW" | "DENY"
+    reasons: List[str]
+    checked_at: str
 
-  <section class="card">
-    <h2>Comandi</h2>
-    <pre>
-unebdo mint   --input event.json --out proof/
-unebdo verify --proof proof/
-    </pre>
-  </section>
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
 
-  <section class="card">
-    <h2>Output</h2>
-    <ul>
-      <li><code>manifest.json</code> — manifest strutturato</li>
-      <li><code>manifest.canon.json</code> — versione canonicalizzata</li>
-      <li><code>hashes.txt</code> — hash SHA-512</li>
-      <li><code>signature.hex</code> — firma digitale</li>
-      <li><code>public_key.hex</code> — chiave pubblica</li>
-    </ul>
-  </section>
+def evaluate_manifest(manifest: Dict[str, Any]) -> OpcDecision:
+    """
+    OPC STRONG (v0.2)
+    - FAIL-CLOSED
+    - verifica struttura
+    - verifica hash SHA-512
+    - verifica firma Ed25519
+    """
 
-  <section class="card">
-    <h2>Stato</h2>
-    <ul>
-      <li>🟢 MVP funzionante</li>
-      <li>🟡 Ancoraggi esterni (IPFS / ledger): pianificati</li>
-      <li>🟡 Policy avanzate (κ, Χτ): pianificate</li>
-    </ul>
-  </section>
+    reasons: List[str] = []
 
-  <section class="card">
-    <h2>Codice</h2>
-    <p>
-      Il codice esecutivo è disponibile nello stesso repository UNEBDO,
-      sotto la cartella <code>src/</code>.
-    </p>
-  </section>
+    if not isinstance(manifest, dict):
+        return OpcDecision("DENY", ["manifest_not_object"], _now_iso())
 
-  <footer style="margin-top:26px;border-top:1px solid #ddd;padding-top:14px">
-    <small class="muted">UNEBDO Core · Software Module · GitHub Pages</small>
-  </footer>
-</body>
-</html>
+    # ===== campi minimi =====
+    if "unebdo_version" not in manifest:
+        reasons.append("missing_unebdo_version")
+    if "prev_hash" not in manifest:
+        reasons.append("missing_prev_hash")
+    if "event" not in manifest:
+        reasons.append("missing_event")
+    if "trace" not in manifest:
+        reasons.append("missing_trace")
+
+    prev_hash = manifest.get("prev_hash", "")
+    if not isinstance(prev_hash, str) or not HEX128.match(prev_hash):
+        reasons.append("invalid_prev_hash")
+
+    event = manifest.get("event")
+    if not isinstance(event, dict):
+        reasons.append("event_not_object")
+    else:
+        if "type" not in event:
+            reasons.append("missing_event_type")
+        if "ts" not in event:
+            reasons.append("missing_event_ts")
+        if "subject_id" not in event:
+            reasons.append("missing_subject_id")
+
+    trace = manifest.get("trace", {})
+    if not isinstance(trace, dict):
+        reasons.append("trace_not_object")
+        trace = {}
+
+    manifest_sha512 = trace.get("manifest_sha512")
+    signature_hex = trace.get("signature")
+    public_key_hex = trace.get("public_key")
+
+    if not isinstance(manifest_sha512, str) or len(manifest_sha512) == 0:
+        reasons.append("missing_manifest_sha512")
+    if not isinstance(signature_hex, str) or len(signature_hex) == 0:
+        reasons.append("missing_signature")
+    if not isinstance(public_key_hex, str) or len(public_key_hex) == 0:
+        reasons.append("missing_public_key")
+
+    # FAIL-CLOSED se struttura non valida
+    if reasons:
+        return OpcDecision("DENY", reasons, _now_iso())
+
+    # ===== verifica hash =====
+    canon = canonical_bytes(manifest)
+    real_hash = hashlib.sha512(canon).hexdigest()
+    if real_hash != manifest_sha512:
+        reasons.append("manifest_hash_mismatch")
+
+    # ===== verifica firma =====
+    try:
+        vk = import_public_key_hex(public_key_hex)
+        sig_bytes = bytes.fromhex(signature_hex)
+        if not verify(vk, canon, sig_bytes):
+            reasons.append("signature_invalid")
+    except Exception:
+        reasons.append("signature_verification_error")
+
+    decision = "ALLOW" if not reasons else "DENY"
+    return OpcDecision(decision, reasons, _now_iso())
+
+import hashlib
+import json
+from dataclasses import dataclass
+from typing import Any, Dict
+
+from .canonical import canonical_json
+from .crypto import (
+    new_keypair,
+    sign,
+    export_public_key_hex,
+)
+
+def sha512_hex(data: bytes) -> str:
+    return hashlib.sha512(data).hexdigest()
+
+@dataclass
+class ProofBundle:
+    manifest: Dict[str, Any]
+    manifest_canonical: str
+    manifest_hash: str
+    signature_hex: str
+    public_key_hex: str
+
+def build_manifest(event: Dict[str, Any], prev_hash: str) -> Dict[str, Any]:
+    return {
+        "unebdo_version": "0.2.0",
+        "prev_hash": prev_hash,
+        "event": event,
+        "trace": {
+            "manifest_sha512": "",
+            "signature": "",
+            "public_key": ""
+        }
+    }
+
+def mint(event: Dict[str, Any], prev_hash: str = "0"*128) -> ProofBundle:
+    manifest = build_manifest(event, prev_hash)
+
+    # 1) canonicalizza con trace vuoto
+    canon_tmp = canonical_json(manifest)
+    hash_tmp = sha512_hex(canon_tmp.encode("utf-8"))
+
+    # 2) firma
+    sk, vk = new_keypair()
+    signature = sign(sk, canon_tmp.encode("utf-8"))
+
+    # 3) scrivi trace
+    manifest["trace"]["manifest_sha512"] = hash_tmp
+    manifest["trace"]["signature"] = signature.hex()
+    manifest["trace"]["public_key"] = export_public_key_hex(vk)
+
+    # 4) canonicalizza finale + hash finale
+    canon_final = canonical_json(manifest)
+    hash_final = sha512_hex(canon_final.encode("utf-8"))
+    manifest["trace"]["manifest_sha512"] = hash_final
+
+    return ProofBundle(
+        manifest=manifest,
+        manifest_canonical=canon_final,
+        manifest_hash=hash_final,
+        signature_hex=manifest["trace"]["signature"],
+        public_key_hex=manifest["trace"]["public_key"],
+    )
+
+from unebdo.core import mint
+from unebdo.opc import evaluate_manifest
+
+def test_opc_allow_valid_manifest():
+    event = {
+        "type": "demo",
+        "ts": "2026-01-21T12:00:00Z",
+        "subject_id": "IPR-HBCE-000",
+        "payload": {"x": 1}
+    }
+    bundle = mint(event)
+    decision = evaluate_manifest(bundle.manifest)
+    assert decision.decision == "ALLOW"
+
+def test_opc_deny_tampered_manifest():
+    event = {
+        "type": "demo",
+        "ts": "2026-01-21T12:00:00Z",
+        "subject_id": "IPR-HBCE-000",
+        "payload": {"x": 1}
+    }
+    bundle = mint(event)
+
+    # manomissione
+    bundle.manifest["event"]["payload"]["x"] = 999
+
+    decision = evaluate_manifest(bundle.manifest)
+    assert decision.decision == "DENY"
