@@ -3,87 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UNEBDO — Software</title>
+  <title>UNEBDO — Portal</title>
   <style>
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:980px;margin:40px auto;padding:0 16px;line-height:1.5}
     header{border-bottom:1px solid #ddd;padding-bottom:16px;margin-bottom:22px}
     nav a{margin-right:12px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-    .card{border:1px solid #ddd;border-radius:14px;padding:16px}
-    .pill{display:inline-block;border:1px solid #999;border-radius:999px;padding:2px 10px;font-size:12px;margin-left:8px}
+    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:14px 0}
     code{background:#f5f5f5;padding:2px 6px;border-radius:6px}
     .muted{color:#666}
-    .kpi{margin:10px 0 0 0;padding-left:18px}
   </style>
 </head>
 <body>
   <header>
-    <h1>UNEBDO — Software <span class="pill">Catalogo</span></h1>
+    <h1>UNEBDO — Portal</h1>
     <p class="muted">
-      Vetrina tecnica: schede sintetiche dei moduli. Il codice esecutivo vive nel repository,
-      la pagina spiega e collega.
+      Nodo tecnico-giuridico per prove opponibili: manifest canonicalizzato, hash-chain (SHA-512), firma (Ed25519),
+      policy fail-closed (OPC).
     </p>
     <nav>
-      <a href="../">← Home</a>
-      <a href="../#ipr">IPR</a>
-      <a href="../#verify">Verify</a>
-      <a href="./">Software</a>
+      <a href="./">Home</a>
+      <a href="./software/">Software</a>
+      <a href="#ipr">IPR</a>
+      <a href="#verify">Verify</a>
     </nav>
   </header>
 
-  <section class="grid">
-    <article class="card">
-      <h2>UNEBDO Core <span class="pill">MVP</span></h2>
-      <p>
-        Motore “proof”: genera <b>manifest JSON canonicalizzato</b>, <b>hash-chain</b> (<code>prev_hash</code>)
-        e <b>firma</b> (Ed25519). Produce un pacchetto verificabile.
-      </p>
-      <ul class="kpi">
-        <li><b>Comandi:</b> <code>unebdo mint</code> · <code>unebdo verify</code></li>
-        <li><b>Output:</b> <code>proof/manifest.json</code>, <code>signature</code>, <code>hashes</code></li>
-        <li><b>Scopo:</b> prova ripetibile e auditabile</li>
-      </ul>
-      <p style="margin-top:12px">
-        <a href="./unebdo-core.html">Apri scheda →</a>
-      </p>
-    </article>
+  <section class="card" id="software">
+    <h2>Software</h2>
+    <p>Catalogo moduli e schede operative.</p>
+    <p><a href="./software/">Apri catalogo software →</a></p>
+  </section>
 
-    <article class="card">
-      <h2>OPC <span class="pill">Planned</span></h2>
-      <p>
-        Policy computabile e controllo di validità (regole, quorum, fail-closed legale).
-        Qui comparirà la scheda quando il modulo è implementato.
-      </p>
-      <p class="muted">Stato: in progettazione.</p>
-    </article>
+  <section class="card" id="ipr">
+    <h2>IPR</h2>
+    <p>Radice identitaria e continuità probatoria (riferimento semantico/giuridico).</p>
+    <p class="muted">Qui puoi linkare le pagine di verifica pubblica IPR quando vuoi.</p>
+  </section>
 
-    <article class="card">
-      <h2>MetaExchange <span class="pill">Planned</span></h2>
-      <p>
-        Interoperabilità e scambio dati: normalizzazione, routing, correlazione tra eventi e proof.
-      </p>
-      <p class="muted">Stato: in progettazione.</p>
-    </article>
-
-    <article class="card">
-      <h2>NeuroLoop <span class="pill">Planned</span></h2>
-      <p>
-        Ciclo decisionale e feedback: osserva eventi, applica policy, produce esiti tracciabili.
-      </p>
-      <p class="muted">Stato: in progettazione.</p>
-    </article>
-
-    <article class="card">
-      <h2>Io-Space <span class="pill">Planned</span></h2>
-      <p>
-        Interfaccia e spazio operativo (dashboard): visualizza proof, verifica, cronologie e stati.
-      </p>
-      <p class="muted">Stato: in progettazione.</p>
-    </article>
+  <section class="card" id="verify">
+    <h2>Verify</h2>
+    <p>Verifica offline: hash + firma + policy (OPC). Audit automatizzato via GitJoker (CI).</p>
   </section>
 
   <footer style="margin-top:26px;border-top:1px solid #ddd;padding-top:14px">
-    <small class="muted">UNEBDO — Software Catalog · GitHub Pages</small>
+    <small class="muted">UNEBDO · GitHub Pages</small>
   </footer>
 </body>
 </html>
