@@ -1,87 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UNEBDO — Hermeticum B.C.E.</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNEBDO — Software</title>
   <style>
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0b0b0b;color:#f2f2f2;line-height:1.6}
-    header{padding:44px 20px 26px;text-align:center;border-bottom:1px solid #333}
-    header h1{margin:0;font-size:2.1em;letter-spacing:1px}
-    header p{margin:10px 0 0;color:#aaa}
-    nav{margin:20px auto 0;max-width:1100px;padding:14px 12px;border:1px solid #333;border-radius:12px;text-align:center}
-    nav a{color:#8fd3ff;text-decoration:none;margin:0 7px;white-space:nowrap}
-    nav a:hover{text-decoration:underline}
-    main{max-width:920px;margin:0 auto;padding:36px 20px 48px}
-    h2{border-left:4px solid #888;padding-left:10px;margin-top:38px}
-    ul{list-style:none;padding-left:0}
-    li{margin:10px 0}
-    .pill{display:inline-block;margin-left:8px;padding:2px 10px;border:1px solid #444;border-radius:999px;font-size:.85em;color:#bbb}
-    .box{border:1px solid #333;border-radius:12px;padding:14px 14px;margin-top:14px;background:#0e0e0e}
-    footer{padding:20px;text-align:center;font-size:.85em;color:#777;border-top:1px solid #333}
-    code{color:#d7ffb2}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:980px;margin:40px auto;padding:0 16px;line-height:1.5}
+    header{border-bottom:1px solid #ddd;padding-bottom:16px;margin-bottom:22px}
+    nav a{margin-right:12px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .card{border:1px solid #ddd;border-radius:14px;padding:16px}
+    .pill{display:inline-block;border:1px solid #999;border-radius:999px;padding:2px 10px;font-size:12px;margin-left:8px}
+    code{background:#f5f5f5;padding:2px 6px;border-radius:6px}
+    .muted{color:#666}
+    .kpi{margin:10px 0 0 0;padding-left:18px}
   </style>
 </head>
 <body>
+  <header>
+    <h1>UNEBDO — Software <span class="pill">Catalogo</span></h1>
+    <p class="muted">
+      Vetrina tecnica: schede sintetiche dei moduli. Il codice esecutivo vive nel repository,
+      la pagina spiega e collega.
+    </p>
+    <nav>
+      <a href="../">← Home</a>
+      <a href="../#ipr">IPR</a>
+      <a href="../#verify">Verify</a>
+      <a href="./">Software</a>
+    </nav>
+  </header>
 
-<header>
-  <h1>UNEBDO</h1>
-  <p>Dispositivo giuridico-computabile — nodo BCE</p>
-  <p>Hermeticum B.C.E. (Blindata · Computabile · Evolutiva)</p>
-</header>
+  <section class="grid">
+    <article class="card">
+      <h2>UNEBDO Core <span class="pill">MVP</span></h2>
+      <p>
+        Motore “proof”: genera <b>manifest JSON canonicalizzato</b>, <b>hash-chain</b> (<code>prev_hash</code>)
+        e <b>firma</b> (Ed25519). Produce un pacchetto verificabile.
+      </p>
+      <ul class="kpi">
+        <li><b>Comandi:</b> <code>unebdo mint</code> · <code>unebdo verify</code></li>
+        <li><b>Output:</b> <code>proof/manifest.json</code>, <code>signature</code>, <code>hashes</code></li>
+        <li><b>Scopo:</b> prova ripetibile e auditabile</li>
+      </ul>
+      <p style="margin-top:12px">
+        <a href="./unebdo-core.html">Apri scheda →</a>
+      </p>
+    </article>
 
-<nav aria-label="BCE Global Navigation">
-  <a href="/hermeticum-bce-services/">Services</a> |
-  <a href="/Hermeticum-B.C.E.-Technology/">Technology</a> |
-  <a href="/gitjoker-c2/">GitJoker-C2</a> |
-  <a href="/ue-ipr-registry/">UE IPR Registry</a> |
-  <a href="/esoterologia-edizioni-ipr5/">Esoterologia Edizioni</a> |
-  <a href="/corpus-esoterologia-ermetica/">Corpus</a> |
-  <a href="/apocalipsis/">Apocalipsis</a>
-</nav>
+    <article class="card">
+      <h2>OPC <span class="pill">Planned</span></h2>
+      <p>
+        Policy computabile e controllo di validità (regole, quorum, fail-closed legale).
+        Qui comparirà la scheda quando il modulo è implementato.
+      </p>
+      <p class="muted">Stato: in progettazione.</p>
+    </article>
 
-<main>
+    <article class="card">
+      <h2>MetaExchange <span class="pill">Planned</span></h2>
+      <p>
+        Interoperabilità e scambio dati: normalizzazione, routing, correlazione tra eventi e proof.
+      </p>
+      <p class="muted">Stato: in progettazione.</p>
+    </article>
 
-  <h2>Cos’è UNEBDO</h2>
-  <p>
-    <strong>UNEBDO</strong> è un <strong>dispositivo giuridico-computabile</strong>:
-    un layer che trasforma atti, policy e condizioni di validità in regole verificabili,
-    tracciabili e opponibili nel tempo.
-  </p>
+    <article class="card">
+      <h2>NeuroLoop <span class="pill">Planned</span></h2>
+      <p>
+        Ciclo decisionale e feedback: osserva eventi, applica policy, produce esiti tracciabili.
+      </p>
+      <p class="muted">Stato: in progettazione.</p>
+    </article>
 
-  <div class="box">
-    <strong>Scopo operativo</strong>
-    <ul>
-      <li>• Formalizzare regole di validità (chi / cosa / quando / come)</li>
-      <li>• Garantire tracciabilità e audit trail</li>
-      <li>• Supportare opponibilità tecnica (evidenza verificabile)</li>
-      <li>• Ridurre ambiguità con schemi computabili</li>
-    </ul>
-  </div>
+    <article class="card">
+      <h2>Io-Space <span class="pill">Planned</span></h2>
+      <p>
+        Interfaccia e spazio operativo (dashboard): visualizza proof, verifica, cronologie e stati.
+      </p>
+      <p class="muted">Stato: in progettazione.</p>
+    </article>
+  </section>
 
-  <h2>Componenti</h2>
-  <ul>
-    <li><strong>Schema Layer</strong> <span class="pill">modelli</span> — definizioni e JSON schema</li>
-    <li><strong>Evidence Layer</strong> <span class="pill">proof</span> — hash, timestamp, riferimenti</li>
-    <li><strong>Policy Layer</strong> <span class="pill">rules</span> — regole e condizioni</li>
-    <li><strong>Audit Layer</strong> <span class="pill">log</span> — verifiche e checklist</li>
-  </ul>
-
-  <h2>Standard BCE (anti-404)</h2>
-  <p>
-    Link inter-repo in formato <code>/repo/</code>, slash finale, case-sensitive.
-    UNEBDO è un nodo autonomo ma integrato nel portale Services.
-  </p>
-
-  <h2>Stato</h2>
-  <p>🟢 <strong>ATTIVO</strong> — nodo in costruzione controllata</p>
-
-</main>
-
-<footer>
-  © Hermeticum B.C.E. — Manuel Coletta<br/>
-  UNEBDO — Dispositivo giuridico-computabile
-</footer>
-
+  <footer style="margin-top:26px;border-top:1px solid #ddd;padding-top:14px">
+    <small class="muted">UNEBDO — Software Catalog · GitHub Pages</small>
+  </footer>
 </body>
 </html>
