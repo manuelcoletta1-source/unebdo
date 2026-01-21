@@ -1,4 +1,4 @@
-# UNEBDO — Unified Evidentiary Node for Blindata Digital Opposability
+![UNEBDO Proof](https://github.com/manuelcoletta1-source/unebdo/actions/workflows/verify-unebdo.yml/badge.svg)# UNEBDO — Unified Evidentiary Node for Blindata Digital Opposability
 
 **UNEBDO** è un sistema tecnico-giuridico per la generazione di **prove digitali opponibili**,
 basato su **manifest JSON canonicalizzati**, **hash-chain**, **firme crittografiche**
