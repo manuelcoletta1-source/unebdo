@@ -1,4 +1,4 @@
-# UNEBDO — Unified Evidentiary Node (B.C.E.)
+![GitJoker Audit](https://github.com/manuelcoletta1-source/unebdo/actions/workflows/gitjoker-ecosystem.yml/badge.svg)# UNEBDO — Unified Evidentiary Node (B.C.E.)
 
 **UNEBDO** è un nodo tecnico-giuridico per la generazione e verifica di **prove digitali opponibili**, basato su:
 - manifest JSON canonicalizzati
@@ -127,3 +127,45 @@ Autore e Fondatore
 
 Manuel Coletta
 UNEBDO · HERMETICUM B.C.E.
+![GitJoker Audit](https://github.com/manuelcoletta1-source/unebdo/actions/workflows/gitjoker-ecosystem.yml/badge.svg)
+
+# UNEBDO — Unified Evidentiary Node (B.C.E.)
+
+**UNEBDO** è un nodo **tecnico-giuridico** per la generazione e verifica di **prove digitali opponibili**, basato su:
+- manifest JSON canonicalizzati
+- hash-chain (SHA-512)
+- firme crittografiche (Ed25519)
+- policy computabile **fail-closed** (OPC)
+
+Questo repository è il **punto di verità unico**: vetrina pubblica (GitHub Pages), documentazione e **software esecutivo** convivono in modo ordinato.
+
+---
+
+## Scopo
+- Rendere ogni evento **verificabile offline**
+- Separare **presentazione** (Pages) da **esecuzione** (core)
+- Applicare **policy automatiche** (ALLOW/DENY) con audit continuo
+
+> Le pagine spiegano. Il software esegue. Le policy decidono.
+
+---
+
+## Vetrina Pubblica (GitHub Pages)
+- Home: https://manuelcoletta1-source.github.io/unebdo/
+- **Software (catalogo):** https://manuelcoletta1-source.github.io/unebdo/software/
+
+---
+
+## Software
+
+### UNEBDO Core (MVP)
+Motore di prova che:
+- costruisce manifest deterministici
+- calcola hash SHA-512 con chaining (`prev_hash`)
+- firma il manifest (Ed25519)
+- esporta un **proof bundle** verificabile
+
+**Comandi**
+```bash
+unebdo mint   --input event.json --out proof/
+unebdo verify --proof proof/
