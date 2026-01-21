@@ -1,81 +1,129 @@
-![UNEBDO Proof](https://github.com/manuelcoletta1-source/unebdo/actions/workflows/verify-unebdo.yml/badge.svg)# UNEBDO — Unified Evidentiary Node for Blindata Digital Opposability
+# UNEBDO — Unified Evidentiary Node (B.C.E.)
 
-**UNEBDO** è un sistema tecnico-giuridico per la generazione di **prove digitali opponibili**,
-basato su **manifest JSON canonicalizzati**, **hash-chain**, **firme crittografiche**
-e architettura modulare **Blindata · Computabile · Evolutiva (B.C.E.)**.
+**UNEBDO** è un nodo tecnico-giuridico per la generazione e verifica di **prove digitali opponibili**, basato su:
+- manifest JSON canonicalizzati
+- hash-chain (SHA-512)
+- firme crittografiche (Ed25519)
+- policy computabile **fail-closed** (OPC)
 
-Questo repository unisce:
-- **vetrina pubblica (GitHub Pages)**
-- **documentazione tecnica**
-- **software esecutivo (UNEBDO Core)**
-
-in un’unica base coerente.
+Questo repository è il **punto di verità unico**: vetrina pubblica (GitHub Pages), documentazione e software esecutivo.
 
 ---
 
-## 🎯 Obiettivo del Repository
+## Scopo
+- Rendere ogni evento **verificabile offline**
+- Separare **presentazione** (Pages) da **esecuzione** (core)
+- Applicare **policy automatiche** (ALLOW/DENY) con audit continuo
 
-Fornire un **punto di verità unico** per UNEBDO:
-
-- spiegare **cos’è** e **come funziona**
-- mostrare i **moduli software**
-- ospitare il **core esecutivo** che genera prove verificabili
-- mantenere separazione chiara tra **presentazione** e **esecuzione**
-
-👉 Le pagine spiegano.  
-👉 Il software esegue.
+> Le pagine spiegano. Il software esegue. Le policy decidono.
 
 ---
 
-## 🌐 Vetrina Pubblica (GitHub Pages)
-
-La vetrina è accessibile qui:
-
-🔗 https://manuelcoletta1-source.github.io/unebdo/
-
-Include:
-- introduzione a UNEBDO
-- principi di opponibilità
-- collegamento all’IPR
-- catalogo software
-
-### Catalogo Software
-🔗 https://manuelcoletta1-source.github.io/unebdo/software/
+## Vetrina Pubblica (GitHub Pages)
+- Home: https://manuelcoletta1-source.github.io/unebdo/
+- Software (catalogo): https://manuelcoletta1-source.github.io/unebdo/software/
 
 ---
 
-## 🧩 Software
+## Software
 
 ### UNEBDO Core (MVP)
-🔗 Scheda software:  
-https://manuelcoletta1-source.github.io/unebdo/software/unebdo-core.html
-
-**Funzione**
-- Genera **pacchetti di prova opponibili**
-- Output verificabile offline
-- Ripetibile e auditabile
-
-**Caratteristiche MVP**
-- Manifest JSON canonicalizzato
-- Hash SHA-512 con chaining (`prev_hash`)
-- Firma digitale Ed25519
-- Verifica completa della prova
+Motore di prova che:
+- costruisce manifest deterministici
+- calcola hash SHA-512 con chaining (`prev_hash`)
+- firma il manifest (Ed25519)
+- esporta un proof bundle verificabile
 
 **Comandi**
 ```bash
 unebdo mint   --input event.json --out proof/
-unebdo verify --proof proof/**
+unebdo verify --proof proof/
+
+Output
+
+manifest.json
+
+manifest.canon.json
+
+hashes.txt
+
+signature.hex
+
+public_key.hex
+
+
+Scheda: ./software/unebdo-core.html
+
+
+---
+
+OPC — Opponibility Policy Controller (STRONG)
+
+Policy computabile fail-closed:
+
+valida struttura del manifest
+
+verifica hash e firma
+
+decide ALLOW solo se tutto è coerente
+
+
+
+---
+
+IPR & Opponibilità
+
+UNEBDO opera con una radice identitaria (IPR) come riferimento semantico/giuridico per tracciabilità e continuità probatoria.
+
+
+---
+
+Struttura del Repository
+
 unebdo/
-├─ README.md              ← questo file (vetrina testuale)
-├─ index.html             ← GitHub Pages
-├─ software/              ← pagine vetrina dei software
-│   ├─ index.html
-│   └─ unebdo-core.html
-├─ src/unebdo/            ← CORE SOFTWARE (Python)
-│   ├─ cli.py
-│   ├─ core.py
-│   ├─ canonical.py
-│   └─ crypto.py
+├─ README.md
+├─ index.html
+├─ software/
+│  ├─ index.html
+│  ├─ unebdo-core.html
+│  └─ opc.html
+├─ src/unebdo/
+│  ├─ cli.py
+│  ├─ core.py
+│  ├─ opc.py
+│  ├─ canonical.py
+│  └─ crypto.py
 ├─ tests/
-├─ pyproject.toml
-└─ LICENSE
+├─ specs/
+├─ schemas/
+├─ examples/
+└─ .github/workflows/
+
+
+---
+
+Audit Automatico (GitJoker)
+
+Ogni push/PR:
+
+esegue test
+
+verifica proof di esempio
+
+blocca incoerenze (fail-closed)
+
+
+
+---
+
+Stato
+
+🟢 ATTIVO — Core + OPC operativi, vetrina software pubblica, CI attivo.
+
+
+---
+
+Autore e Fondatore
+
+Manuel Coletta
+UNEBDO · HERMETICUM B.C.E.
