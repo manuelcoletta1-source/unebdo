@@ -1,0 +1,30 @@
+name: UNEBDO Proof Verification
+
+on:
+  push:
+    paths:
+      - "examples/**"
+      - "src/**"
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install UNEBDO Core
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Verify demo proof
+        run: |
+          unebdo verify --proof examples/proof-001/
