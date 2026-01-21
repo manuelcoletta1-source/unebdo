@@ -1,46 +1,81 @@
-# UNEBDO — Dispositivo giuridico-computabile (Hermeticum B.C.E.)
+# UNEBDO — Unified Evidentiary Node for Blindata Digital Opposability
 
-UNEBDO è un **nodo BCE** progettato per rendere **computabili** regole, policy e condizioni di validità,
-con tracciabilità e verificabilità (audit-ready).
+**UNEBDO** è un sistema tecnico-giuridico per la generazione di **prove digitali opponibili**,
+basato su **manifest JSON canonicalizzati**, **hash-chain**, **firme crittografiche**
+e architettura modulare **Blindata · Computabile · Evolutiva (B.C.E.)**.
 
----
+Questo repository unisce:
+- **vetrina pubblica (GitHub Pages)**
+- **documentazione tecnica**
+- **software esecutivo (UNEBDO Core)**
 
-## Nodi Pubblici (GitHub Pages)
-
-- **UNEBDO (Pages)**  
-  https://manuelcoletta1-source.github.io/unebdo/
-
-- **Services (HUB)**  
-  https://manuelcoletta1-source.github.io/hermeticum-bce-services/
-
-- **Technology**  
-  https://manuelcoletta1-source.github.io/Hermeticum-B.C.E.-Technology/
+in un’unica base coerente.
 
 ---
 
-## Obiettivo
+## 🎯 Obiettivo del Repository
 
-- Formalizzare condizioni di validità (chi/cosa/quando/come)
-- Stabilire evidenze verificabili (hash, timestamp, riferimenti)
-- Supportare opponibilità tecnica (proof + audit trail)
-- Integrare con i nodi BCE (Services / Technology / C2)
+Fornire un **punto di verità unico** per UNEBDO:
 
----
+- spiegare **cos’è** e **come funziona**
+- mostrare i **moduli software**
+- ospitare il **core esecutivo** che genera prove verificabili
+- mantenere separazione chiara tra **presentazione** e **esecuzione**
 
-## Struttura consigliata del repo
-
-- `/index.html` — pagina pubblica (landing)
-- `/schemas/` — modelli e schemi (JSON Schema)
-- `/policies/` — policy computabili
-- `/evidence/` — evidenze e riferimenti
-- `/docs/` — note tecniche e specifiche
+👉 Le pagine spiegano.  
+👉 Il software esegue.
 
 ---
 
-## Stato
+## 🌐 Vetrina Pubblica (GitHub Pages)
 
-🟢 ATTIVO — sviluppo controllato
+La vetrina è accessibile qui:
+
+🔗 https://manuelcoletta1-source.github.io/unebdo/
+
+Include:
+- introduzione a UNEBDO
+- principi di opponibilità
+- collegamento all’IPR
+- catalogo software
+
+### Catalogo Software
+🔗 https://manuelcoletta1-source.github.io/unebdo/software/
 
 ---
 
-© Hermeticum B.C.E. — Manuel Coletta
+## 🧩 Software
+
+### UNEBDO Core (MVP)
+🔗 Scheda software:  
+https://manuelcoletta1-source.github.io/unebdo/software/unebdo-core.html
+
+**Funzione**
+- Genera **pacchetti di prova opponibili**
+- Output verificabile offline
+- Ripetibile e auditabile
+
+**Caratteristiche MVP**
+- Manifest JSON canonicalizzato
+- Hash SHA-512 con chaining (`prev_hash`)
+- Firma digitale Ed25519
+- Verifica completa della prova
+
+**Comandi**
+```bash
+unebdo mint   --input event.json --out proof/
+unebdo verify --proof proof/**
+unebdo/
+├─ README.md              ← questo file (vetrina testuale)
+├─ index.html             ← GitHub Pages
+├─ software/              ← pagine vetrina dei software
+│   ├─ index.html
+│   └─ unebdo-core.html
+├─ src/unebdo/            ← CORE SOFTWARE (Python)
+│   ├─ cli.py
+│   ├─ core.py
+│   ├─ canonical.py
+│   └─ crypto.py
+├─ tests/
+├─ pyproject.toml
+└─ LICENSE
