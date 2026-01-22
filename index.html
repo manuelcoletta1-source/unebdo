@@ -2,51 +2,123 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UNEBDO — Portal</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UNEBDO — Evidence & Traceability Device (UE)</title>
+  <meta name="description" content="UNEBDO è il dispositivo tecnico di evidenza e tracciabilità: rende verificabili nel tempo identità, progetti e decisioni (IPR, GitJoker, OPC). UE / Horizon-compatible." />
+  <meta name="robots" content="index, follow" />
+
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:980px;margin:40px auto;padding:0 16px;line-height:1.5}
-    header{border-bottom:1px solid #ddd;padding-bottom:16px;margin-bottom:22px}
-    nav a{margin-right:12px}
-    .card{border:1px solid #ddd;border-radius:14px;padding:16px;margin:14px 0}
-    code{background:#f5f5f5;padding:2px 6px;border-radius:6px}
-    .muted{color:#666}
+    :root { color-scheme: dark; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0b0c10; color:#e8e8e8; }
+    header, main, footer { max-width: 1040px; margin: 0 auto; padding: 24px; }
+    .card { background:#0f1117; border:1px solid #24262b; border-radius:16px; padding:20px; margin-bottom:16px; }
+    h1 { margin:0 0 6px 0; font-size:30px; }
+    h2 { margin:22px 0 10px 0; font-size:20px; }
+    p { margin:8px 0; line-height:1.55; color:#cfd2d6; }
+    ul { margin:8px 0 8px 18px; color:#cfd2d6; }
+    li { margin:6px 0; }
+    a { color:#d6b8ff; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .meta { font-size:13px; color:#9aa2aa; }
+    .tag { display:inline-block; padding:4px 10px; border:1px solid #24262b; border-radius:999px; font-size:12px; background:#0b0c10; color:#cfd2d6; margin-right:6px; }
+    .btn { display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid #24262b; background:#0b0c10; margin:6px 6px 0 0; }
+    code { background:#0b0c10; border:1px solid #24262b; border-radius:8px; padding:2px 6px; }
+    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .rule { border-left: 4px solid #d6b8ff; padding-left: 12px; }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "UNEBDO",
+    "description": "Dispositivo tecnico di evidenza, tracciabilità e auditability: rende verificabili nel tempo identità, progetti e decisioni (IPR, GitJoker, OPC).",
+    "applicationCategory": "SystemIntegration",
+    "operatingSystem": "Web",
+    "author": { "@type": "Organization", "name": "HERMETICUM B.C.E. S.r.l." }
+  }
+  </script>
 </head>
+
 <body>
-  <header>
-    <h1>UNEBDO — Portal</h1>
-    <p class="muted">
-      Nodo tecnico-giuridico per prove opponibili: manifest canonicalizzato, hash-chain (SHA-512), firma (Ed25519),
-      policy fail-closed (OPC).
+
+<header>
+  <div class="card">
+    <h1>UNEBDO</h1>
+    <p class="meta">Evidence & Traceability Device · UE / Horizon</p>
+
+    <div class="rule">
+      <p><strong>Funzione:</strong> UNEBDO trasforma attività operative (codice, decisioni, deleghe, manifest) in <strong>evidenze verificabili nel tempo</strong>.</p>
+      <p class="meta">Se un’informazione non è tracciabile e verificabile, in ambito UE tende a decadere. UNEBDO esiste per evitarlo.</p>
+    </div>
+
+    <div>
+      <span class="tag">Traceability</span>
+      <span class="tag">Audit Trail</span>
+      <span class="tag">UE-ready</span>
+      <span class="tag">Horizon-compatible</span>
+      <span class="tag">Evidence Device</span>
+    </div>
+
+    <div>
+      <a class="btn" href="./README.md">README</a>
+      <a class="btn" href="https://manuelcoletta1-source.github.io/opc/">OPC</a>
+      <a class="btn" href="https://manuelcoletta1-source.github.io/gitjoker-c2/">GitJoker</a>
+      <a class="btn" href="https://manuelcoletta1-source.github.io/ue-ipr-registry/">Registro UE IPR</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>Cosa fa UNEBDO</h2>
+    <ul>
+      <li>produce e organizza <strong>evidenze tecniche</strong> (log, manifest, prove)</li>
+      <li>mantiene <strong>continuità temporale</strong> tramite versionamento pubblico</li>
+      <li>abilita <strong>verifiche offline</strong> (hash, timestamp, ancoraggi)</li>
+      <li>supporta progetti UE (IPR, Horizon) rendendo il lavoro <strong>auditabile</strong></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Relazione con gli altri nodi</h2>
+    <div class="grid">
+      <div class="card" style="margin:0;">
+        <h2 style="margin-top:0;">OPC</h2>
+        <p>Definisce regole e vincoli (policy core). UNEBDO le rende verificabili come evidenza.</p>
+      </div>
+      <div class="card" style="margin:0;">
+        <h2 style="margin-top:0;">GitJoker (AIJOKER-C2)</h2>
+        <p>Operatività del programmatore con IPR. UNEBDO conserva e stabilizza le prove dell’operazione.</p>
+      </div>
+      <div class="card" style="margin:0;">
+        <h2 style="margin-top:0;">IPR / Registro UE</h2>
+        <p>Identità e continuità del titolare. UNEBDO aggancia evidenze e le rende confrontabili nel tempo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Allineamento UE</h2>
+    <ul>
+      <li><strong>AI Act:</strong> logging, governance, accountability tecnica</li>
+      <li><strong>NIS2 / CER:</strong> auditability, prevenzione, tracciabilità incidenti</li>
+      <li><strong>eIDAS / ETSI:</strong> integrità, evidenza, continuità temporale</li>
+      <li><strong>Horizon Europe:</strong> dimostrazione metodologica e maturità del progetto</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <div class="card">
+    <p class="meta">
+      © 2026 — HERMETICUM B.C.E. S.r.l. — Manuel Coletta<br/>
+      UNEBDO · Evidence & Traceability Device
     </p>
-    <nav>
-      <a href="./">Home</a>
-      <a href="./software/">Software</a>
-      <a href="#ipr">IPR</a>
-      <a href="#verify">Verify</a>
-    </nav>
-  </header>
+  </div>
+</footer>
 
-  <section class="card" id="software">
-    <h2>Software</h2>
-    <p>Catalogo moduli e schede operative.</p>
-    <p><a href="./software/">Apri catalogo software →</a></p>
-  </section>
-
-  <section class="card" id="ipr">
-    <h2>IPR</h2>
-    <p>Radice identitaria e continuità probatoria (riferimento semantico/giuridico).</p>
-    <p class="muted">Qui puoi linkare le pagine di verifica pubblica IPR quando vuoi.</p>
-  </section>
-
-  <section class="card" id="verify">
-    <h2>Verify</h2>
-    <p>Verifica offline: hash + firma + policy (OPC). Audit automatizzato via GitJoker (CI).</p>
-  </section>
-
-  <footer style="margin-top:26px;border-top:1px solid #ddd;padding-top:14px">
-    <small class="muted">UNEBDO · GitHub Pages</small>
-  </footer>
 </body>
 </html>
