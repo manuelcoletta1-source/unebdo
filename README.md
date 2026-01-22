@@ -1,171 +1,70 @@
-![GitJoker Audit](https://github.com/manuelcoletta1-source/unebdo/actions/workflows/gitjoker-ecosystem.yml/badge.svg)# UNEBDO — Unified Evidentiary Node (B.C.E.)
-
-**UNEBDO** è un nodo tecnico-giuridico per la generazione e verifica di **prove digitali opponibili**, basato su:
-- manifest JSON canonicalizzati
-- hash-chain (SHA-512)
-- firme crittografiche (Ed25519)
-- policy computabile **fail-closed** (OPC)
-
-Questo repository è il **punto di verità unico**: vetrina pubblica (GitHub Pages), documentazione e software esecutivo.
+# UNEBDO — Evidence & Traceability Device
+## Evidenza tecnica · Continuità · Audit Trail (UE)
 
 ---
 
-## Scopo
-- Rendere ogni evento **verificabile offline**
-- Separare **presentazione** (Pages) da **esecuzione** (core)
-- Applicare **policy automatiche** (ALLOW/DENY) con audit continuo
+## Cos’è UNEBDO
+**UNEBDO** è un **dispositivo tecnico di evidenza e tracciabilità** progettato per rendere
+**verificabili nel tempo** identità, progetti e decisioni operative nell’ecosistema **Hermeticum B.C.E.**.
 
-> Le pagine spiegano. Il software esegue. Le policy decidono.
-
----
-
-## Vetrina Pubblica (GitHub Pages)
-- Home: https://manuelcoletta1-source.github.io/unebdo/
-- Software (catalogo): https://manuelcoletta1-source.github.io/unebdo/software/
+UNEBDO non “certifica” pubblicamente.  
+Produce **evidenze tecniche** utilizzabili come supporto probatorio e di audit.
 
 ---
 
-## Software
+## Perché è necessario
+Nel software, nella cybersecurity e nell’IA ad alto rischio, il problema non è solo “fare”.
+Il problema è **dimostrare**:
 
-### UNEBDO Core (MVP)
-Motore di prova che:
-- costruisce manifest deterministici
-- calcola hash SHA-512 con chaining (`prev_hash`)
-- firma il manifest (Ed25519)
-- esporta un proof bundle verificabile
+- chi ha operato
+- quando
+- con quale versione
+- con quale responsabilità
+- con quali vincoli
 
-**Comandi**
-```bash
-unebdo mint   --input event.json --out proof/
-unebdo verify --proof proof/
-
-Output
-
-manifest.json
-
-manifest.canon.json
-
-hashes.txt
-
-signature.hex
-
-public_key.hex
-
-
-Scheda: ./software/unebdo-core.html
-
+UNEBDO esiste per impedire che il lavoro **decada** nel tempo.
 
 ---
 
-OPC — Opponibility Policy Controller (STRONG)
-
-Policy computabile fail-closed:
-
-valida struttura del manifest
-
-verifica hash e firma
-
-decide ALLOW solo se tutto è coerente
-
-
+## Cosa fa (funzioni chiave)
+- organizza evidenze (manifest, log, prove, checksum)
+- supporta integrità e verifiche offline (hash)
+- mantiene continuità tramite versionamento pubblico
+- stabilizza la tracciabilità per contesti UE e Horizon
 
 ---
 
-IPR & Opponibilità
-
-UNEBDO opera con una radice identitaria (IPR) come riferimento semantico/giuridico per tracciabilità e continuità probatoria.
-
-
----
-
-Struttura del Repository
-
-unebdo/
-├─ README.md
-├─ index.html
-├─ software/
-│  ├─ index.html
-│  ├─ unebdo-core.html
-│  └─ opc.html
-├─ src/unebdo/
-│  ├─ cli.py
-│  ├─ core.py
-│  ├─ opc.py
-│  ├─ canonical.py
-│  └─ crypto.py
-├─ tests/
-├─ specs/
-├─ schemas/
-├─ examples/
-└─ .github/workflows/
-
+## Relazione con gli altri nodi
+- **OPC** → definisce policy e vincoli operativi  
+- **GitJoker (AIJOKER-C2)** → operatività del programmatore con IPR  
+- **UNEBDO** → conserva e rende opponibili le evidenze dell’operazione  
+- **Registro UE IPR** → identità e continuità del titolare
 
 ---
 
-Audit Automatico (GitJoker)
-
-Ogni push/PR:
-
-esegue test
-
-verifica proof di esempio
-
-blocca incoerenze (fail-closed)
-
-
+## Ambito UE
+UNEBDO è concepito in coerenza con:
+- **AI Act UE** (logging, governance tecnica)
+- **NIS2 / CER** (auditability e tracciabilità)
+- **eIDAS / ETSI** (integrità e continuità)
+- **Horizon Europe** (metodologia, TRL, prova di maturità)
 
 ---
 
-Stato
-
-🟢 ATTIVO — Core + OPC operativi, vetrina software pubblica, CI attivo.
-
-
----
-
-Autore e Fondatore
-
-Manuel Coletta
-UNEBDO · HERMETICUM B.C.E.
-![GitJoker Audit](https://github.com/manuelcoletta1-source/unebdo/actions/workflows/gitjoker-ecosystem.yml/badge.svg)
-
-# UNEBDO — Unified Evidentiary Node (B.C.E.)
-
-**UNEBDO** è un nodo **tecnico-giuridico** per la generazione e verifica di **prove digitali opponibili**, basato su:
-- manifest JSON canonicalizzati
-- hash-chain (SHA-512)
-- firme crittografiche (Ed25519)
-- policy computabile **fail-closed** (OPC)
-
-Questo repository è il **punto di verità unico**: vetrina pubblica (GitHub Pages), documentazione e **software esecutivo** convivono in modo ordinato.
+## Stato del progetto
+- **Stato:** ATTIVO
+- **Categoria:** Evidence / Traceability Device
+- **Livello:** UE-ready / Horizon-compatible
 
 ---
 
-## Scopo
-- Rendere ogni evento **verificabile offline**
-- Separare **presentazione** (Pages) da **esecuzione** (core)
-- Applicare **policy automatiche** (ALLOW/DENY) con audit continuo
-
-> Le pagine spiegano. Il software esegue. Le policy decidono.
-
----
-
-## Vetrina Pubblica (GitHub Pages)
-- Home: https://manuelcoletta1-source.github.io/unebdo/
-- **Software (catalogo):** https://manuelcoletta1-source.github.io/unebdo/software/
+## Riferimenti
+- UNEBDO (pagina pubblica): https://manuelcoletta1-source.github.io/unebdo/
+- OPC: https://manuelcoletta1-source.github.io/opc/
+- GitJoker: https://manuelcoletta1-source.github.io/gitjoker-c2/
+- Registro UE IPR: https://manuelcoletta1-source.github.io/ue-ipr-registry/
 
 ---
 
-## Software
-
-### UNEBDO Core (MVP)
-Motore di prova che:
-- costruisce manifest deterministici
-- calcola hash SHA-512 con chaining (`prev_hash`)
-- firma il manifest (Ed25519)
-- esporta un **proof bundle** verificabile
-
-**Comandi**
-```bash
-unebdo mint   --input event.json --out proof/
-unebdo verify --proof proof/
+© HERMETICUM B.C.E. S.r.l. — Manuel Coletta  
+UNEBDO · Evidence & Traceability Device
