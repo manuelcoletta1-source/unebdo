@@ -1,123 +1,128 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UNEBDO — Evidence & Traceability Device (UE)</title>
-  <meta name="description" content="UNEBDO è il dispositivo tecnico di evidenza e tracciabilità: rende verificabili nel tempo identità, progetti e decisioni (IPR, GitJoker, OPC). UE / Horizon-compatible." />
-  <meta name="robots" content="index, follow" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UNEBDO — Root Enforcement | Hermeticum B.C.E.</title>
+  <meta name="description" content="UNEBDO (Layer 0): Root Enforcement, opponibilità e audit-by-design per l’ecosistema Hermeticum B.C.E. UE-first, fail-closed." />
+  <meta name="author" content="Manuel Coletta" />
+  <meta name="publisher" content="Esoterologia Edizioni" />
   <style>
     :root { color-scheme: dark; }
-    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:#0b0c10; color:#e8e8e8; }
-    header, main, footer { max-width: 1040px; margin: 0 auto; padding: 24px; }
-    .card { background:#0f1117; border:1px solid #24262b; border-radius:16px; padding:20px; margin-bottom:16px; }
-    h1 { margin:0 0 6px 0; font-size:30px; }
-    h2 { margin:22px 0 10px 0; font-size:20px; }
-    p { margin:8px 0; line-height:1.55; color:#cfd2d6; }
-    ul { margin:8px 0 8px 18px; color:#cfd2d6; }
-    li { margin:6px 0; }
-    a { color:#d6b8ff; text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .meta { font-size:13px; color:#9aa2aa; }
-    .tag { display:inline-block; padding:4px 10px; border:1px solid #24262b; border-radius:999px; font-size:12px; background:#0b0c10; color:#cfd2d6; margin-right:6px; }
-    .btn { display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid #24262b; background:#0b0c10; margin:6px 6px 0 0; }
-    code { background:#0b0c10; border:1px solid #24262b; border-radius:8px; padding:2px 6px; }
-    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-    .rule { border-left: 4px solid #d6b8ff; padding-left: 12px; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(255,120,120,.18), transparent 55%),
+        #0b0c10;
+      color:#e8e8e8;
+    }
+    header, main, footer { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    .card{
+      background: rgba(15,17,23,.80);
+      border: 1px solid #24262b;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.38);
+      backdrop-filter: blur(10px);
+    }
+    h1{ font-size: 30px; margin: 0 0 10px; }
+    h2{ font-size: 18px; font-weight: 650; opacity: .9; margin: 0 0 18px; }
+    h3{ font-size: 16px; margin: 0 0 10px; }
+    p{ line-height: 1.55; opacity: .95; margin: 10px 0; }
+    .muted{ opacity: .75; font-size: 13px; }
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #2b2f38;
+      opacity: .9;
+      margin-bottom: 12px;
+    }
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 900px){ .grid{ grid-template-columns: 1fr 1fr; } }
+    .btns{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+    .btn{
+      border: 1px solid #2b2f38;
+      border-radius: 12px;
+      padding: 10px 14px;
+      background: rgba(17,20,32,.85);
+      color: #ff9b9b;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .btn:hover{ text-decoration: underline; }
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+    }
+    footer{ text-align:center; }
+    .sep{ height:1px; background:#24262b; margin: 14px 0; opacity:.9; }
   </style>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "UNEBDO",
-    "description": "Dispositivo tecnico di evidenza, tracciabilità e auditability: rende verificabili nel tempo identità, progetti e decisioni (IPR, GitJoker, OPC).",
-    "applicationCategory": "SystemIntegration",
-    "operatingSystem": "Web",
-    "author": { "@type": "Organization", "name": "HERMETICUM B.C.E. S.r.l." }
-  }
-  </script>
 </head>
-
 <body>
 
 <header>
   <div class="card">
+    <div class="tag">Layer 0 · Root Enforcement</div>
     <h1>UNEBDO</h1>
-    <p class="meta">Evidence & Traceability Device · UE / Horizon</p>
-
-    <div class="rule">
-      <p><strong>Funzione:</strong> UNEBDO trasforma attività operative (codice, decisioni, deleghe, manifest) in <strong>evidenze verificabili nel tempo</strong>.</p>
-      <p class="meta">Se un’informazione non è tracciabile e verificabile, in ambito UE tende a decadere. UNEBDO esiste per evitarlo.</p>
-    </div>
-
-    <div>
-      <span class="tag">Traceability</span>
-      <span class="tag">Audit Trail</span>
-      <span class="tag">UE-ready</span>
-      <span class="tag">Horizon-compatible</span>
-      <span class="tag">Evidence Device</span>
-    </div>
-
-    <div>
+    <h2>Unified Normative Enforcement & Binding Digital Object</h2>
+    <p>
+      UNEBDO è il **vincolo strutturale** dell’ecosistema Hermeticum B.C.E.
+      Ogni operazione è ammessa solo se verificabile, opponibile e auditabile.
+    </p>
+    <p class="muted">
+      Regola fondamentale: <span class="mono">se non è verificabile → non è eseguibile</span>
+    </p>
+    <div class="btns">
       <a class="btn" href="./README.md">README</a>
-      <a class="btn" href="https://manuelcoletta1-source.github.io/opc/">OPC</a>
-      <a class="btn" href="https://manuelcoletta1-source.github.io/gitjoker-c2/">GitJoker</a>
-      <a class="btn" href="https://manuelcoletta1-source.github.io/ue-ipr-registry/">Registro UE IPR</a>
+      <a class="btn" href="https://github.com/manuelcoletta1-source/unebdo">Apri Repo</a>
+      <a class="btn" href="../opc/">OPC</a>
+      <a class="btn" href="../hermeticum-bce-services/">Services HUB</a>
     </div>
   </div>
 </header>
 
-<main>
+<main class="grid">
 
   <section class="card">
-    <h2>Cosa fa UNEBDO</h2>
-    <ul>
-      <li>produce e organizza <strong>evidenze tecniche</strong> (log, manifest, prove)</li>
-      <li>mantiene <strong>continuità temporale</strong> tramite versionamento pubblico</li>
-      <li>abilita <strong>verifiche offline</strong> (hash, timestamp, ancoraggi)</li>
-      <li>supporta progetti UE (IPR, Horizon) rendendo il lavoro <strong>auditabile</strong></li>
-    </ul>
+    <h3>Ruolo nello stack</h3>
+    <p class="muted">
+      UNEBDO è a monte di ogni esecuzione. Applica vincolo prima dell’operatività.
+    </p>
+    <p class="mono">
+      OPC → UNEBDO → IPR → moduli → GitJoker-C2
+    </p>
+    <div class="sep"></div>
+    <p class="muted">
+      Se un’azione non soddisfa i vincoli UNEBDO, viene bloccata prima di generare traccia.
+    </p>
   </section>
 
-  <section class="card">
-    <h2>Relazione con gli altri nodi</h2>
-    <div class="grid">
-      <div class="card" style="margin:0;">
-        <h2 style="margin-top:0;">OPC</h2>
-        <p>Definisce regole e vincoli (policy core). UNEBDO le rende verificabili come evidenza.</p>
-      </div>
-      <div class="card" style="margin:0;">
-        <h2 style="margin-top:0;">GitJoker (AIJOKER-C2)</h2>
-        <p>Operatività del programmatore con IPR. UNEBDO conserva e stabilizza le prove dell’operazione.</p>
-      </div>
-      <div class="card" style="margin:0;">
-        <h2 style="margin-top:0;">IPR / Registro UE</h2>
-        <p>Identità e continuità del titolare. UNEBDO aggancia evidenze e le rende confrontabili nel tempo.</p>
-      </div>
+  <aside class="card">
+    <h3>Principi chiave</h3>
+    <p class="muted">
+      • UE-first by design<br/>
+      • Opponibilità prima dell’operatività<br/>
+      • Audit-by-design<br/>
+      • Fail-closed obbligatorio<br/>
+      • Neutralità tecnologica<br/>
+      • Decadenza esplicita
+    </p>
+    <div class="btns">
+      <a class="btn" href="../ipr-core/">IPR-CORE</a>
+      <a class="btn" href="../ipr-gate/">IPR-GATE</a>
     </div>
-  </section>
-
-  <section class="card">
-    <h2>Allineamento UE</h2>
-    <ul>
-      <li><strong>AI Act:</strong> logging, governance, accountability tecnica</li>
-      <li><strong>NIS2 / CER:</strong> auditability, prevenzione, tracciabilità incidenti</li>
-      <li><strong>eIDAS / ETSI:</strong> integrità, evidenza, continuità temporale</li>
-      <li><strong>Horizon Europe:</strong> dimostrazione metodologica e maturità del progetto</li>
-    </ul>
-  </section>
+  </aside>
 
 </main>
 
 <footer>
-  <div class="card">
-    <p class="meta">
-      © 2026 — HERMETICUM B.C.E. S.r.l. — Manuel Coletta<br/>
-      UNEBDO · Evidence & Traceability Device
-    </p>
-  </div>
+  <p class="muted">
+    © Manuel Coletta<br/>
+    <b>Esoterologia Edizioni</b><br/>
+    UNEBDO · Hermeticum B.C.E.
+  </p>
 </footer>
 
 </body>
