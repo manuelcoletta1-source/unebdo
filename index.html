@@ -1,128 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>UNEBDO — Root Enforcement | Hermeticum B.C.E.</title>
-  <meta name="description" content="UNEBDO (Layer 0): Root Enforcement, opponibilità e audit-by-design per l’ecosistema Hermeticum B.C.E. UE-first, fail-closed." />
-  <meta name="author" content="Manuel Coletta" />
-  <meta name="publisher" content="Esoterologia Edizioni" />
-  <style>
-    :root { color-scheme: dark; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(1200px 600px at 15% -10%, rgba(255,120,120,.18), transparent 55%),
-        #0b0c10;
-      color:#e8e8e8;
-    }
-    header, main, footer { max-width: 1100px; margin: 0 auto; padding: 24px; }
-    .card{
-      background: rgba(15,17,23,.80);
-      border: 1px solid #24262b;
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.38);
-      backdrop-filter: blur(10px);
-    }
-    h1{ font-size: 30px; margin: 0 0 10px; }
-    h2{ font-size: 18px; font-weight: 650; opacity: .9; margin: 0 0 18px; }
-    h3{ font-size: 16px; margin: 0 0 10px; }
-    p{ line-height: 1.55; opacity: .95; margin: 10px 0; }
-    .muted{ opacity: .75; font-size: 13px; }
-    .tag{
-      display:inline-block;
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #2b2f38;
-      opacity: .9;
-      margin-bottom: 12px;
-    }
-    .grid{ display:grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 900px){ .grid{ grid-template-columns: 1fr 1fr; } }
-    .btns{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
-    .btn{
-      border: 1px solid #2b2f38;
-      border-radius: 12px;
-      padding: 10px 14px;
-      background: rgba(17,20,32,.85);
-      color: #ff9b9b;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .btn:hover{ text-decoration: underline; }
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-    }
-    footer{ text-align:center; }
-    .sep{ height:1px; background:#24262b; margin: 14px 0; opacity:.9; }
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>UNEBDO — Dispositivo giuridico-computabile</title>
+  <meta name="description" content="UNEBDO è il dispositivo giuridico-computabile dell’ecosistema Hermeticum B.C.E. UE-first, audit-first, fail-closed."/>
+  <link rel="stylesheet" href="/assets/ui.css"/>
 </head>
 <body>
 
 <header>
-  <div class="card">
-    <div class="tag">Layer 0 · Root Enforcement</div>
-    <h1>UNEBDO</h1>
-    <h2>Unified Normative Enforcement & Binding Digital Object</h2>
-    <p>
-      UNEBDO è il **vincolo strutturale** dell’ecosistema Hermeticum B.C.E.
-      Ogni operazione è ammessa solo se verificabile, opponibile e auditabile.
-    </p>
-    <p class="muted">
-      Regola fondamentale: <span class="mono">se non è verificabile → non è eseguibile</span>
-    </p>
-    <div class="btns">
-      <a class="btn" href="./README.md">README</a>
-      <a class="btn" href="https://github.com/manuelcoletta1-source/unebdo">Apri Repo</a>
-      <a class="btn" href="../opc/">OPC</a>
-      <a class="btn" href="../hermeticum-bce-services/">Services HUB</a>
-    </div>
+  <div class="wrap nav">
+    <a class="btn primary" href="/">Hermeticum B.C.E.</a>
+    <a class="btn" href="/tech/">Tech</a>
+    <a class="btn" href="/map/">Map</a>
+    <span class="spacer"></span>
+    <a class="btn" href="https://manuelcoletta1-source.github.io/hermeticum-bce-b2g/">B2G</a>
   </div>
 </header>
 
-<main class="grid">
+<div class="wrap">
 
-  <section class="card">
-    <h3>Ruolo nello stack</h3>
-    <p class="muted">
-      UNEBDO è a monte di ogni esecuzione. Applica vincolo prima dell’operatività.
+  <section class="box">
+    <h1>UNEBDO</h1>
+    <p>
+      UNEBDO è il <b>dispositivo giuridico-computabile</b>
+      che consente di produrre e valutare evidenze tecniche
+      in modo verificabile, riproducibile e prudente.
     </p>
-    <p class="mono">
-      OPC → UNEBDO → IPR → moduli → GitJoker-C2
-    </p>
-    <div class="sep"></div>
-    <p class="muted">
-      Se un’azione non soddisfa i vincoli UNEBDO, viene bloccata prima di generare traccia.
+    <p>
+      <span class="tag">UE-first</span>
+      <span class="tag">Audit-first</span>
+      <span class="tag">Fail-closed</span>
+      <span class="tag">Hash-only</span>
     </p>
   </section>
 
-  <aside class="card">
-    <h3>Principi chiave</h3>
-    <p class="muted">
-      • UE-first by design<br/>
-      • Opponibilità prima dell’operatività<br/>
-      • Audit-by-design<br/>
-      • Fail-closed obbligatorio<br/>
-      • Neutralità tecnologica<br/>
-      • Decadenza esplicita
-    </p>
-    <div class="btns">
-      <a class="btn" href="../ipr-core/">IPR-CORE</a>
-      <a class="btn" href="../ipr-gate/">IPR-GATE</a>
+  <section class="grid2">
+    <div class="box">
+      <h2>Cosa fa</h2>
+      <p>
+        • Definisce condizioni tecniche di validità<br/>
+        • Stabilisce stati verificabili dell’evidenza<br/>
+        • Consente valutazioni riproducibili<br/>
+        • Blocca la propagazione in caso di errore
+      </p>
     </div>
-  </aside>
 
-</main>
+    <div class="box">
+      <h2>Cosa non fa</h2>
+      <p>
+        • Non interpreta la legge<br/>
+        • Non prende decisioni giuridiche<br/>
+        • Non sostituisce il giudizio umano<br/>
+        • Non opera in modalità permissiva
+      </p>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>Principio FAIL-CLOSED</h2>
+    <p>
+      In UNEBDO, <b>l’indeterminatezza equivale a non validità</b>.
+      Se una condizione non è verificabile:
+    </p>
+    <p>
+      • l’evidenza non è prodotta<br/>
+      • l’esito è marcato come non valido<br/>
+      • la catena si interrompe
+    </p>
+  </section>
+
+  <section class="box">
+    <h2>Contesto UE</h2>
+    <p>
+      UNEBDO è progettato per ambienti istituzionali,
+      audit pubblici e sperimentazioni regolatorie,
+      senza attribuzione automatica di effetti giuridici.
+    </p>
+  </section>
+
+</div>
 
 <footer>
-  <p class="muted">
-    © Manuel Coletta<br/>
-    <b>Esoterologia Edizioni</b><br/>
-    UNEBDO · Hermeticum B.C.E.
-  </p>
+  <div class="wrap">
+    <p class="small">
+      HERMETICUM B.C.E. S.r.l. — Dispositivo giuridico-computabile<br/>
+      Evidenza tecnica · Nessuna decisione automatica · Fail-closed
+    </p>
+  </div>
 </footer>
 
 </body>
