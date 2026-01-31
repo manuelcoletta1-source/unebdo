@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>Verify UNEBDO Stamp — fail-closed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/unebdo/assets/style.css" />
+</head>
+<body>
+  <header class="hbce-header">
+    <div class="hbce-header__wrap">
+      <div class="hbce-brand">
+        <div class="hbce-brand__name">UNEBDO — Verifica Stamp</div>
+        <div class="hbce-brand__tag">offline deterministico · fail-closed</div>
+      </div>
+      <nav class="hbce-nav">
+        <a class="hbce-nav__link" href="/unebdo/">Home</a>
+        <a class="hbce-nav__link hbce-nav__link--primary" href="/unebdo/stamp/">Stamp</a>
+        <a class="hbce-nav__link" href="/unebdo/schemas/">Schemas</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hbce-main">
+    <section class="hbce-hero">
+      <h1>Verifier (MVP)</h1>
+      <p class="hbce-hero__subtitle">
+        Controlli strutturali *fail-closed* sullo stamp UNEBDO (schema + campi + pattern).
+        La verifica crittografica Ed25519 è il passo successivo (crypto in-browser).
+      </p>
+      <div class="hbce-hero__cta">
+        <a class="hbce-btn hbce-btn--primary" href="/unebdo/stamp/example.stamp.json">Apri example.stamp.json</a>
+        <a class="hbce-btn" href="/unebdo/schemas/UNEBDO-STAMP-v1.schema.json">Apri schema</a>
+        <a class="hbce-btn" href="/unebdo/keys/unebdo_ed25519_pub.pem">Apri pubkey</a>
+      </div>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Esito</h2>
+      <pre id="out">Running…</pre>
+      <p class="hbce-note">
+        Regola: se manca un campo richiesto o un pattern non combacia → INVALID (fail-closed).
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const out = (msg) => document.getElementById("out").textContent = msg;
+
+    function fail(reason){
+      out("INVALID\n\nReason: " + reason);
+      throw new Error(reason);
+    }
+
+    function isHex128(s){
+      return typeof s === "string" && /^[a-fA-F0-9]{128}$/.test(s);
+    }
+
+    async function run(){
+      const stamp = await fetch("/unebdo/stamp/example.stamp.json", { cache: "no-store" }).then(r => r.json());
+
+      // Required top-level keys
+      const required = ["schema","type","policy","subject","issuer","signature","verification"];
+      for (const k of required) if (!(k in stamp)) fail("missing key: " + k);
+
+      if (stamp.schema !== "UNEBDO-STAMP-v1") fail("schema mismatch");
+      if (stamp.type !== "UNEBDO_OFFICIAL_STAMP") fail("type mismatch");
+
+      // Policy must be strict true
+      const p = stamp.policy || {};
+      const policyKeys = ["ue_first","audit_first","hash_only","fail_closed","append_only"];
+      for (const k of policyKeys){
+        if (p[k] !== true) fail("policy not strict true: " + k);
+      }
+
+      // Subject hash must be sha-512 hex 128
+      const sh = stamp.subject?.hash;
+      if (!sh) fail("missing subject.hash");
+      if (sh.algorithm !== "SHA-512") fail("hash algorithm mismatch");
+      if (!isHex128(sh.digest_hex)) fail("hash digest_hex must be 128 hex chars");
+
+      // Issuer must be UNEBDO
+      if (stamp.issuer?.name !== "UNEBDO") fail("issuer mismatch");
+      if (typeof stamp.issuer?.public_key_ref !== "string" || !stamp.issuer.public_key_ref.length)
+        fail("issuer public_key_ref missing");
+
+      // Signature structure
+      if (stamp.signature?.algorithm !== "ED25519") fail("signature algorithm mismatch");
+      if (stamp.signature?.signed_payload !== "SHA512_DIGEST_HEX") fail("signed_payload mismatch");
+      if (typeof stamp.signature?.signature_b64 !== "string" || !stamp.signature.signature_b64.length)
+        fail("signature_b64 missing");
+
+      // Verification rule
+      if (stamp.verification?.mode !== "OFFLINE_DETERMINISTIC") fail("verification mode mismatch");
+      if (stamp.verification?.rule !== "FAIL_CLOSED") fail("verification rule mismatch");
+      if (stamp.verification?.on_mismatch !== "INVALID") fail("verification on_mismatch mismatch");
+
+      out("STRUCTURE: PASS\n\nNext: add in-browser ED25519 verify against public key.");
+    }
+
+    run().catch(e => { /* fail already wrote output */ });
+  </script>
+</body>
+</html>
