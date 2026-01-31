@@ -1,95 +1,119 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>UNEBDO — Dispositivo giuridico-computabile</title>
-  <meta name="description" content="UNEBDO è il dispositivo giuridico-computabile dell’ecosistema Hermeticum B.C.E. UE-first, audit-first, fail-closed."/>
-  <link rel="stylesheet" href="/assets/ui.css"/>
+  <meta charset="utf-8" />
+  <title>UNEBDO — Tempo Opponibile (ΦΩ)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="UNEBDO: sistema tecnico per marcature temporali opponibili sub-secondo (SLQ/Qubytron), con pipeline κ/ε, firme Ed25519 e ancoraggi append-only." />
+  <link rel="stylesheet" href="/unebdo/assets/style.css" />
 </head>
 <body>
 
-<header>
-  <div class="wrap nav">
-    <a class="btn primary" href="/">Hermeticum B.C.E.</a>
-    <a class="btn" href="/tech/">Tech</a>
-    <a class="btn" href="/map/">Map</a>
-    <span class="spacer"></span>
-    <a class="btn" href="https://manuelcoletta1-source.github.io/hermeticum-bce-b2g/">B2G</a>
-  </div>
-</header>
+  <header class="hbce-header">
+    <div class="hbce-header__wrap">
+      <div class="hbce-brand">
+        <div class="hbce-brand__name">UNEBDO — Tempo Opponibile ΦΩ</div>
+        <div class="hbce-brand__tag">UE-first · audit-first · hash-only · fail-closed · append-only</div>
+      </div>
 
-<div class="wrap">
-
-  <section class="box">
-    <h1>UNEBDO</h1>
-    <p>
-      UNEBDO è il <b>dispositivo giuridico-computabile</b>
-      che consente di produrre e valutare evidenze tecniche
-      in modo verificabile, riproducibile e prudente.
-    </p>
-    <p>
-      <span class="tag">UE-first</span>
-      <span class="tag">Audit-first</span>
-      <span class="tag">Fail-closed</span>
-      <span class="tag">Hash-only</span>
-    </p>
-  </section>
-
-  <section class="grid2">
-    <div class="box">
-      <h2>Cosa fa</h2>
-      <p>
-        • Definisce condizioni tecniche di validità<br/>
-        • Stabilisce stati verificabili dell’evidenza<br/>
-        • Consente valutazioni riproducibili<br/>
-        • Blocca la propagazione in caso di errore
-      </p>
+      <nav class="hbce-nav" aria-label="Navigazione">
+        <a class="hbce-nav__link hbce-nav__link--primary" href="/unebdo/">Home</a>
+        <a class="hbce-nav__link" href="/unebdo/docs/processor/">Processore ΞΩ</a>
+        <a class="hbce-nav__link" href="/unebdo/docs/protocol/">Protocollo ΦΩ·T₀</a>
+        <a class="hbce-nav__link" href="/unebdo/schemas/">Schemas</a>
+        <a class="hbce-nav__link" href="/unebdo/stamp/">Stamp</a>
+      </nav>
     </div>
 
-    <div class="box">
-      <h2>Cosa non fa</h2>
-      <p>
-        • Non interpreta la legge<br/>
-        • Non prende decisioni giuridiche<br/>
-        • Non sostituisce il giudizio umano<br/>
-        • Non opera in modalità permissiva
-      </p>
+    <div class="hbce-header__meta">
+      <span class="hbce-pill">ΦΩ·T₀: 2025-10-24T15:36:00Z (UTC(IT))</span>
+      <span class="hbce-pill">Protocollo INRiM: 2025-INRMCLE-0021541</span>
+      <span class="hbce-pill">Root SHA-512: ΦΩ-LTA₁</span>
     </div>
-  </section>
+  </header>
 
-  <section class="box">
-    <h2>Principio FAIL-CLOSED</h2>
-    <p>
-      In UNEBDO, <b>l’indeterminatezza equivale a non validità</b>.
-      Se una condizione non è verificabile:
-    </p>
-    <p>
-      • l’evidenza non è prodotta<br/>
-      • l’esito è marcato come non valido<br/>
-      • la catena si interrompe
-    </p>
-  </section>
+  <main class="hbce-main" role="main">
+    <section class="hbce-hero">
+      <h1>UNEBDO</h1>
+      <p class="hbce-hero__subtitle">
+        Sistema e metodo tecnico per marcature temporali opponibili sub-secondo basate su
+        <strong>Secondo Legale Qubytron (SLQ)</strong>, con pipeline <strong>κ/ε</strong>,
+        manifest JSON canonicalizzati, firma <strong>Ed25519</strong> e ancoraggio append-only.
+      </p>
 
-  <section class="box">
-    <h2>Contesto UE</h2>
-    <p>
-      UNEBDO è progettato per ambienti istituzionali,
-      audit pubblici e sperimentazioni regolatorie,
-      senza attribuzione automatica di effetti giuridici.
-    </p>
-  </section>
+      <div class="hbce-hero__cta">
+        <a class="hbce-btn hbce-btn--primary" href="/unebdo/docs/processor/">Leggi: Processore ΞΩ</a>
+        <a class="hbce-btn" href="/unebdo/docs/protocol/">Leggi: Protocollo ΦΩ·T₀</a>
+        <a class="hbce-btn" href="/unebdo/stamp/">UNEBDO Stamp (endorsement)</a>
+      </div>
+    </section>
 
-</div>
+    <section class="hbce-section hbce-section--grid">
+      <div>
+        <h2>Scala Qubytronica Estesa (Qt₁–Qt₉)</h2>
+        <p>
+          Una rotazione completa Qt₁→Qt₉ costituisce 1 SLQ, verificato contro UTC(IT) (INRiM).
+        </p>
+        <ul>
+          <li>Qt₁ 0,1s — fisico/dinamico</li>
+          <li>Qt₃ 0,3s — legale base</li>
+          <li>Qt₅ 0,5s — notariale</li>
+          <li>Qt₇ 0,7s — governance</li>
+          <li>Qt₉ 0,9s — archiviazione Ω∞</li>
+        </ul>
+      </div>
 
-<footer>
-  <div class="wrap">
-    <p class="small">
-      HERMETICUM B.C.E. S.r.l. — Dispositivo giuridico-computabile<br/>
-      Evidenza tecnica · Nessuna decisione automatica · Fail-closed
-    </p>
-  </div>
-</footer>
+      <div>
+        <h2>Pipeline κ/ε (fail-closed)</h2>
+        <ol class="hbce-flow">
+          <li><strong>Acquire Σ</strong> (sensori/clock)</li>
+          <li><strong>Index κ</strong> (monotonia)</li>
+          <li><strong>Estimate ε̂</strong> (ΞΩ hybrid)</li>
+          <li><strong>Validate Χτ</strong> (fail-closed)</li>
+          <li><strong>Build Manifest</strong> (JSON canonical + prev_hash)</li>
+          <li><strong>Dual-Sign</strong> (Ed25519 + PQC opz.)</li>
+          <li><strong>Anchor</strong> (IPFS/BTC/EVM federato)</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Regole di realtà (UE-first)</h2>
+      <ul>
+        <li><strong>Hash-only</strong>: nessuna custodia di dati personali.</li>
+        <li><strong>Fail-closed</strong>: se non verificabile → non valido.</li>
+        <li><strong>Append-only</strong>: si estende, non si riscrive.</li>
+        <li><strong>Audit riproducibile</strong>: verifica offline deterministica.</li>
+      </ul>
+      <p class="hbce-note">
+        Questo repository descrive un sistema tecnico e un tracciato verificabile; non promette validità legale automatica
+        senza l’inquadramento corretto e senza i requisiti normativi applicabili (eIDAS/QTSP ecc.).
+      </p>
+    </section>
+  </main>
+
+  <footer class="hbce-footer">
+    <div class="hbce-footer__wrap">
+      <div class="hbce-footer__left">
+        <div><strong>UNEBDO</strong></div>
+        <span>Tempo opponibile ΦΩ · audit-first</span>
+      </div>
+      <nav class="hbce-footer__nav">
+        <a href="/unebdo/docs/protocol/">Protocollo</a>
+        <a href="/unebdo/docs/processor/">ΞΩ</a>
+        <a href="/unebdo/schemas/">Schemas</a>
+        <a href="/unebdo/stamp/">Stamp</a>
+      </nav>
+      <div class="hbce-footer__right">
+        Append-only · hash-only · fail-closed
+      </div>
+    </div>
+
+    <div class="hbce-footer__meta">
+      <span class="hbce-pill">INRiM Sync: ΦΩ·T₀</span>
+      <span class="hbce-pill">Root SHA-512 ΦΩ-LTA₁ (pubblico)</span>
+    </div>
+  </footer>
 
 </body>
 </html>
