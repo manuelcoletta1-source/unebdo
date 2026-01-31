@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UNEBDO Stamp v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "type",
+    "policy",
+    "subject",
+    "issuer",
+    "signature",
+    "verification"
+  ],
+  "properties": {
+    "schema": {
+      "const": "UNEBDO-STAMP-v1",
+      "description": "Canonical UNEBDO stamp schema identifier"
+    },
+    "type": {
+      "const": "UNEBDO_OFFICIAL_STAMP",
+      "description": "Detached endorsement stamp (not a truth seal)"
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "ue_first",
+        "audit_first",
+        "hash_only",
+        "fail_closed",
+        "append_only"
+      ],
+      "properties": {
+        "ue_first": { "type": "boolean", "const": true },
+        "audit_first": { "type": "boolean", "const": true },
+        "hash_only": { "type": "boolean", "const": true },
+        "fail_closed": { "type": "boolean", "const": true },
+        "append_only": { "type": "boolean", "const": true }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "required": [
+        "artifact",
+        "hash"
+      ],
+      "properties": {
+        "artifact": {
+          "type": "string",
+          "description": "Reference to the stamped artifact (e.g. receipt.json)"
+        },
+        "hash": {
+          "type": "object",
+          "required": ["algorithm", "digest_hex"],
+          "properties": {
+            "algorithm": { "const": "SHA-512" },
+            "digest_hex": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{128}$"
+            }
+          }
+        }
+      }
+    },
+    "issuer": {
+      "type": "object",
+      "required": [
+        "name",
+        "public_key_ref"
+      ],
+      "properties": {
+        "name": {
+          "const": "UNEBDO",
+          "description": "Policy issuer (not a legal authority)"
+        },
+        "public_key_ref": {
+          "type": "string",
+          "description": "Path or URL to UNEBDO ED25519 public key"
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "signature_b64",
+        "signed_payload"
+      ],
+      "properties": {
+        "algorithm": { "const": "ED25519" },
+        "signature_b64": {
+          "type": "string",
+          "description": "Base64 signature of the signed payload"
+        },
+        "signed_payload": {
+          "const": "SHA512_DIGEST_HEX",
+          "description": "What is signed: the subject hash digest"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": [
+        "mode",
+        "rule",
+        "on_mismatch"
+      ],
+      "properties": {
+        "mode": {
+          "const": "OFFLINE_DETERMINISTIC"
+        },
+        "rule": {
+          "const": "FAIL_CLOSED"
+        },
+        "on_mismatch": {
+          "const": "INVALID"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
