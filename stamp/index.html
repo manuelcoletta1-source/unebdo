@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>UNEBDO Stamp — Endorsement ED25519</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/unebdo/assets/style.css" />
+</head>
+<body>
+  <header class="hbce-header">
+    <div class="hbce-header__wrap">
+      <div class="hbce-brand">
+        <div class="hbce-brand__name">UNEBDO Stamp</div>
+        <div class="hbce-brand__tag">firma di conformità · non “sigillo di verità”</div>
+      </div>
+      <nav class="hbce-nav">
+        <a class="hbce-nav__link" href="/unebdo/">Home</a>
+        <a class="hbce-nav__link" href="/unebdo/docs/processor/">ΞΩ</a>
+        <a class="hbce-nav__link" href="/unebdo/docs/protocol/">Protocollo</a>
+        <a class="hbce-nav__link" href="/unebdo/schemas/">Schemas</a>
+        <a class="hbce-nav__link hbce-nav__link--primary" href="/unebdo/stamp/">Stamp</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hbce-main">
+    <section class="hbce-hero">
+      <h1>Endorsement verificabile (Ed25519)</h1>
+      <p class="hbce-hero__subtitle">
+        Lo Stamp UNEBDO è una <strong>seconda firma</strong> su un digest (es. SHA-512 della receipt IPR).
+        Se non verificabile → <strong>INVALID</strong> (fail-closed).
+      </p>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Che cosa attesta</h2>
+      <ul>
+        <li>Che una receipt rispetta una policy dichiarata (hash-only, audit-first, fail-closed)</li>
+        <li>Che l’endorsement proviene da una chiave UNEBDO pubblica (pinned)</li>
+        <li>Non attesta verità, diritti, o “validità legale automatica”</li>
+      </ul>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Artefatti</h2>
+      <ul>
+        <li><code>/unebdo/schemas/UNEBDO-STAMP-v1.schema.json</code></li>
+        <li><code>/unebdo/stamp/example.stamp.json</code> (demo)</li>
+        <li><code>/unebdo/keys/unebdo_ed25519_pub.pem</code></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
