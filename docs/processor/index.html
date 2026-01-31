@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>Processore UNEBDO ΞΩ — Tempo Opponibile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/unebdo/assets/style.css" />
+</head>
+<body>
+  <header class="hbce-header">
+    <div class="hbce-header__wrap">
+      <div class="hbce-brand">
+        <div class="hbce-brand__name">UNEBDO ΞΩ — Processore del tempo opponibile</div>
+        <div class="hbce-brand__tag">scala qubytronica estesa · pipeline κ/ε v3</div>
+      </div>
+      <nav class="hbce-nav">
+        <a class="hbce-nav__link" href="/unebdo/">Home</a>
+        <a class="hbce-nav__link hbce-nav__link--primary" href="/unebdo/docs/processor/">Processore ΞΩ</a>
+        <a class="hbce-nav__link" href="/unebdo/docs/protocol/">Protocollo</a>
+        <a class="hbce-nav__link" href="/unebdo/schemas/">Schemas</a>
+        <a class="hbce-nav__link" href="/unebdo/stamp/">Stamp</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hbce-main">
+    <section class="hbce-hero">
+      <h1>Scala Qubytronica Estesa (Qt₁–Qt₉)</h1>
+      <p class="hbce-hero__subtitle">
+        Qt₁=0,1s … Qt₉=0,9s. Un ciclo completo costituisce 1 SLQ (Secondo Opponibile Universale).
+      </p>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Architettura L0–L8</h2>
+      <ul>
+        <li>L0 Ψ_Core′ — contesto mission/policy</li>
+        <li>L1 Λ_IO + Σ — sensori e acquisizione</li>
+        <li>L2 κ_Register — indicizzazione/monotonia</li>
+        <li>L3 ΞΩ_Hybrid — stima ε̂±σ</li>
+        <li>L4 Χτ_Decisioner — policy etiche e fail-closed</li>
+        <li>L5 Τ_Ledger — append-only + Merkle root</li>
+        <li>L6 FAS Federato — multisig in più giurisdizioni</li>
+        <li>L7 Π★.hot2 — transazioni rollback-safe</li>
+        <li>L8 Φ∞ / Ω∞ — autotune + holo-store</li>
+      </ul>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Pipeline κ/ε v3</h2>
+      <ol class="hbce-flow">
+        <li><strong>Acquire Σ</strong></li>
+        <li><strong>Index κ</strong></li>
+        <li><strong>Estimate ε̂</strong></li>
+        <li><strong>Validate Χτ (fail-closed)</strong></li>
+        <li><strong>Build Manifest (canonical JSON + prev_hash)</strong></li>
+        <li><strong>Dual-Sign (Ed25519 + PQC opz.)</strong></li>
+        <li><strong>Anchor (IPFS/BTC/EVM, multisig federato)</strong></li>
+        <li><strong>Φ∞ (autotuning) + Ω∞ (holo-store)</strong></li>
+      </ol>
+      <p class="hbce-note">
+        Sintesi pubblica derivata dal documento tecnico ufficiale ΞΩ (v3.1). 
+      </p>
+    </section>
+  </main>
+</body>
+</html>
