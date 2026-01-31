@@ -1,0 +1,32 @@
+{
+  "schema": "UNEBDO-STAMP-v1",
+  "type": "UNEBDO_OFFICIAL_STAMP",
+  "policy": {
+    "ue_first": true,
+    "audit_first": true,
+    "hash_only": true,
+    "fail_closed": true,
+    "append_only": true
+  },
+  "subject": {
+    "artifact": "HBCE receipt (external target)",
+    "hash": {
+      "algorithm": "SHA-512",
+      "digest_hex": "REPLACE_WITH_SHA512_DIGEST_OF_TARGET_RECEIPT_CANON_JSON"
+    }
+  },
+  "issuer": {
+    "name": "UNEBDO",
+    "public_key_ref": "/unebdo/keys/unebdo_ed25519_pub.pem"
+  },
+  "signature": {
+    "algorithm": "ED25519",
+    "signature_b64": "REPLACE_WITH_ED25519_SIGNATURE_BASE64_OF_SHA512_DIGEST_HEX",
+    "signed_payload": "SHA512_DIGEST_HEX"
+  },
+  "verification": {
+    "mode": "OFFLINE_DETERMINISTIC",
+    "rule": "FAIL_CLOSED",
+    "on_mismatch": "INVALID"
+  }
+}
