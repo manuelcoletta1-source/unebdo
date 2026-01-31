@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <title>Verify UNEBDO Stamp — fail-closed</title>
+  <title>Verify UNEBDO Stamp — SHA-512 + ED25519</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/unebdo/assets/style.css" />
 </head>
@@ -11,7 +11,7 @@
     <div class="hbce-header__wrap">
       <div class="hbce-brand">
         <div class="hbce-brand__name">UNEBDO — Verifica Stamp</div>
-        <div class="hbce-brand__tag">offline deterministico · fail-closed</div>
+        <div class="hbce-brand__tag">SHA-512 deterministico · ED25519 · fail-closed</div>
       </div>
       <nav class="hbce-nav">
         <a class="hbce-nav__link" href="/unebdo/">Home</a>
@@ -23,82 +23,176 @@
 
   <main class="hbce-main">
     <section class="hbce-hero">
-      <h1>Verifier (MVP)</h1>
+      <h1>Verifier (Full)</h1>
       <p class="hbce-hero__subtitle">
-        Controlli strutturali *fail-closed* sullo stamp UNEBDO (schema + campi + pattern).
-        La verifica crittografica Ed25519 è il passo successivo (crypto in-browser).
+        Verifica completa: struttura → hash SHA-512 deterministico → firma ED25519 (endorsement).
+        Se un passo non è riproducibile: INVALID.
       </p>
       <div class="hbce-hero__cta">
-        <a class="hbce-btn hbce-btn--primary" href="/unebdo/stamp/example.stamp.json">Apri example.stamp.json</a>
-        <a class="hbce-btn" href="/unebdo/schemas/UNEBDO-STAMP-v1.schema.json">Apri schema</a>
+        <a class="hbce-btn" href="/unebdo/stamp/example.stamp.json">Apri stamp</a>
         <a class="hbce-btn" href="/unebdo/keys/unebdo_ed25519_pub.pem">Apri pubkey</a>
       </div>
     </section>
 
     <section class="hbce-section">
-      <h2>Esito</h2>
-      <pre id="out">Running…</pre>
+      <h2>Input</h2>
       <p class="hbce-note">
-        Regola: se manca un campo richiesto o un pattern non combacia → INVALID (fail-closed).
+        Target di default: inserisci qui l’URL della receipt (JSON) da timbrare/verificare.
+        Esempio: <code>https://manuelcoletta1-source.github.io/hermeticum-bce-platform/receipt.json</code>
       </p>
+      <input id="target" style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--text)"
+             value="https://manuelcoletta1-source.github.io/hermeticum-bce-platform/receipt.json" />
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="hbce-btn hbce-btn--primary" id="run">Esegui verifica</button>
+        <button class="hbce-btn" id="reset">Reset</button>
+      </div>
+    </section>
+
+    <section class="hbce-section">
+      <h2>Esito</h2>
+      <pre id="out">READY</pre>
     </section>
   </main>
 
+  <script src="/unebdo/assets/vendor/tweetnacl.min.js"></script>
   <script>
-    const out = (msg) => document.getElementById("out").textContent = msg;
+    const outEl = document.getElementById("out");
+    const log = (s) => outEl.textContent = s;
+    const fail = (reason) => { log("INVALID\n\nReason: " + reason); throw new Error(reason); };
 
-    function fail(reason){
-      out("INVALID\n\nReason: " + reason);
-      throw new Error(reason);
+    const te = new TextEncoder();
+
+    function isHex128(s){ return typeof s === "string" && /^[a-fA-F0-9]{128}$/.test(s); }
+
+    function b64ToBytes(b64){
+      try{
+        const bin = atob(b64);
+        const arr = new Uint8Array(bin.length);
+        for(let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+        return arr;
+      }catch(e){ fail("invalid base64 signature"); }
     }
 
-    function isHex128(s){
-      return typeof s === "string" && /^[a-fA-F0-9]{128}$/.test(s);
+    function pemToRawEd25519(pem){
+      // Expect "-----BEGIN PUBLIC KEY-----" (SPKI) or raw base64 line; we handle both.
+      const lines = pem.trim().split(/\r?\n/).filter(l => !l.startsWith("-----"));
+      const b64 = lines.join("").trim();
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+      return bytes;
+    }
+
+    async function sha512Hex(bytes){
+      const digest = await crypto.subtle.digest("SHA-512", bytes);
+      const u8 = new Uint8Array(digest);
+      let hex = "";
+      for(const b of u8) hex += b.toString(16).padStart(2,"0");
+      return hex;
+    }
+
+    function canonicalize(value){
+      // Deterministic JSON canonicalization: recursively sort object keys.
+      if (value === null) return null;
+      if (Array.isArray(value)) return value.map(canonicalize);
+      if (typeof value === "object"){
+        const keys = Object.keys(value).sort();
+        const out = {};
+        for(const k of keys) out[k] = canonicalize(value[k]);
+        return out;
+      }
+      return value;
+    }
+
+    async function fetchJson(url){
+      const r = await fetch(url, { cache: "no-store" });
+      if(!r.ok) fail("fetch failed: " + url + " (" + r.status + ")");
+      return await r.json();
+    }
+
+    async function fetchText(url){
+      const r = await fetch(url, { cache: "no-store" });
+      if(!r.ok) fail("fetch failed: " + url + " (" + r.status + ")");
+      return await r.text();
+    }
+
+    function structuralCheck(stamp){
+      const req = ["schema","type","policy","subject","issuer","signature","verification"];
+      for(const k of req) if(!(k in stamp)) fail("missing key: " + k);
+      if(stamp.schema !== "UNEBDO-STAMP-v1") fail("schema mismatch");
+      if(stamp.type !== "UNEBDO_OFFICIAL_STAMP") fail("type mismatch");
+
+      const p = stamp.policy || {};
+      for(const k of ["ue_first","audit_first","hash_only","fail_closed","append_only"])
+        if(p[k] !== true) fail("policy not strict true: " + k);
+
+      const sh = stamp.subject?.hash;
+      if(!sh) fail("missing subject.hash");
+      if(sh.algorithm !== "SHA-512") fail("hash algorithm mismatch");
+      if(!isHex128(sh.digest_hex)) fail("subject.hash.digest_hex must be 128 hex chars");
+
+      if(stamp.issuer?.name !== "UNEBDO") fail("issuer mismatch");
+      if(typeof stamp.issuer?.public_key_ref !== "string" || !stamp.issuer.public_key_ref.length)
+        fail("issuer public_key_ref missing");
+
+      if(stamp.signature?.algorithm !== "ED25519") fail("signature algorithm mismatch");
+      if(stamp.signature?.signed_payload !== "SHA512_DIGEST_HEX") fail("signed_payload mismatch");
+      if(typeof stamp.signature?.signature_b64 !== "string" || !stamp.signature.signature_b64.length)
+        fail("signature_b64 missing");
+
+      if(stamp.verification?.mode !== "OFFLINE_DETERMINISTIC") fail("verification mode mismatch");
+      if(stamp.verification?.rule !== "FAIL_CLOSED") fail("verification rule mismatch");
+      if(stamp.verification?.on_mismatch !== "INVALID") fail("verification on_mismatch mismatch");
     }
 
     async function run(){
-      const stamp = await fetch("/unebdo/stamp/example.stamp.json", { cache: "no-store" }).then(r => r.json());
+      log("RUNNING…");
+      const targetUrl = document.getElementById("target").value.trim();
+      if(!targetUrl) fail("missing target url");
 
-      // Required top-level keys
-      const required = ["schema","type","policy","subject","issuer","signature","verification"];
-      for (const k of required) if (!(k in stamp)) fail("missing key: " + k);
+      // 1) Load stamp
+      const stamp = await fetchJson("/unebdo/stamp/example.stamp.json");
+      structuralCheck(stamp);
 
-      if (stamp.schema !== "UNEBDO-STAMP-v1") fail("schema mismatch");
-      if (stamp.type !== "UNEBDO_OFFICIAL_STAMP") fail("type mismatch");
+      // 2) Load target receipt JSON
+      const target = await fetchJson(targetUrl);
 
-      // Policy must be strict true
-      const p = stamp.policy || {};
-      const policyKeys = ["ue_first","audit_first","hash_only","fail_closed","append_only"];
-      for (const k of policyKeys){
-        if (p[k] !== true) fail("policy not strict true: " + k);
+      // 3) Canonicalize + SHA512
+      const canon = canonicalize(target);
+      const canonJson = JSON.stringify(canon);
+      const computedDigestHex = await sha512Hex(te.encode(canonJson));
+
+      // 4) Compare to subject.hash.digest_hex (fail-closed)
+      const expected = stamp.subject.hash.digest_hex.toLowerCase();
+      if (computedDigestHex !== expected){
+        fail("sha512 mismatch\nexpected: " + expected + "\ncomputed: " + computedDigestHex);
       }
 
-      // Subject hash must be sha-512 hex 128
-      const sh = stamp.subject?.hash;
-      if (!sh) fail("missing subject.hash");
-      if (sh.algorithm !== "SHA-512") fail("hash algorithm mismatch");
-      if (!isHex128(sh.digest_hex)) fail("hash digest_hex must be 128 hex chars");
+      // 5) Verify ED25519 signature over the digest hex string (UTF-8 bytes)
+      const pem = await fetchText(stamp.issuer.public_key_ref);
+      const pub = pemToRawEd25519(pem);
 
-      // Issuer must be UNEBDO
-      if (stamp.issuer?.name !== "UNEBDO") fail("issuer mismatch");
-      if (typeof stamp.issuer?.public_key_ref !== "string" || !stamp.issuer.public_key_ref.length)
-        fail("issuer public_key_ref missing");
+      const msg = te.encode(expected);
+      const sig = b64ToBytes(stamp.signature.signature_b64);
 
-      // Signature structure
-      if (stamp.signature?.algorithm !== "ED25519") fail("signature algorithm mismatch");
-      if (stamp.signature?.signed_payload !== "SHA512_DIGEST_HEX") fail("signed_payload mismatch");
-      if (typeof stamp.signature?.signature_b64 !== "string" || !stamp.signature.signature_b64.length)
-        fail("signature_b64 missing");
+      if(!window.nacl || !window.nacl.sign || !window.nacl.sign.detached || !window.nacl.sign.detached.verify){
+        fail("ed25519 lib missing (tweetnacl)");
+      }
 
-      // Verification rule
-      if (stamp.verification?.mode !== "OFFLINE_DETERMINISTIC") fail("verification mode mismatch");
-      if (stamp.verification?.rule !== "FAIL_CLOSED") fail("verification rule mismatch");
-      if (stamp.verification?.on_mismatch !== "INVALID") fail("verification on_mismatch mismatch");
+      const ok = window.nacl.sign.detached.verify(msg, sig, pub);
+      if(!ok) fail("ed25519 signature INVALID");
 
-      out("STRUCTURE: PASS\n\nNext: add in-browser ED25519 verify against public key.");
+      log(
+        "VALID\n\n" +
+        "Target: " + targetUrl + "\n" +
+        "Canonical SHA-512: " + computedDigestHex + "\n" +
+        "Issuer: UNEBDO\n" +
+        "Rule: FAIL_CLOSED"
+      );
     }
 
-    run().catch(e => { /* fail already wrote output */ });
+    document.getElementById("run").addEventListener("click", () => run().catch(()=>{}));
+    document.getElementById("reset").addEventListener("click", () => log("READY"));
   </script>
 </body>
 </html>
