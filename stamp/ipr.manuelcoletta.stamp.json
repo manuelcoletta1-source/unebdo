@@ -1,0 +1,7 @@
+{
+ "schema": "UNEBDO-STAMP-v1",
+ "type": "IPR_STAMP",
+ "subject": "Manuel Coletta",
+ "time": "2026-01-19T15:30+01:00",
+n "policy":"UE_FIRST|AUDIT|FAIL_CLOSED|HASH_ONLY"
+}
